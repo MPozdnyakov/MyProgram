@@ -14,5 +14,6 @@ private Comparator comparator;
     @Override
     public int compare(T o1, T o2) {
         return comparator.compare(o1, o2);
+
     }
 }

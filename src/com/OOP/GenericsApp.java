@@ -9,7 +9,7 @@ public class GenericsApp {
         int arrayLength = 10;
         int array[] = new int[arrayLength];
 
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < arrayLength; i++) {
             array[i] = i + 1;
             System.out.print(array[i] + " ");
         }
@@ -23,13 +23,13 @@ public class GenericsApp {
         int firstNumber = array[0];
         int secondNumber = array.length;
         for (int i = 0; i < array.length; i++) {
-            if (firstNumber + secondNumber == N) {
+            if (checkFirstAndLastNumbers(firstNumber, secondNumber,N)) {
                 System.out.print("first number " + " " + firstNumber + " " + "second number = " + secondNumber);
-                break;
+                return;
             }
-            if (checkN(array,N) ==true){
+            if (checkIfReceivedNumberIsBigger(array,N)||checkIfReceivedNumberIsSmaller(array,N)){
                 System.out.println("There are no such numbers");
-                break;
+                return;
             }else if (N > array.length) {
 
                 firstNumber = array[i + 1];
@@ -39,9 +39,14 @@ public class GenericsApp {
         }
     }
 
-    public static boolean checkN(int array[], int N){
-        return((array.length + (array.length - 1) < N)|| ((array[0] + array[1]) > N));
+    public static boolean checkIfReceivedNumberIsBigger(int array[], int N){
+        return((array.length + (array.length - 1) < N));
+    }
+    public static boolean checkIfReceivedNumberIsSmaller(int array[], int N){
+        return((array[0] + array[1]) > N);
+    }
+    public static boolean checkFirstAndLastNumbers(int firstNumber,int secondNumber, int N){
 
-
+        return (firstNumber + secondNumber == N);
     }
 }
