@@ -31,9 +31,9 @@ public class ScannerTest {
 //        System.out.println(list);
 
         for (Map.Entry<String, Integer> map : list.entrySet()) {
-            map.getKey();
-            if (counter>3) {
-                map.getValue();
+
+            if  (map.getValue()>3){
+                System.out.println(map.getKey());
             }
 
 
