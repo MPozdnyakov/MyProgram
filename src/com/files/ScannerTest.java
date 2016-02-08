@@ -30,12 +30,11 @@ public class ScannerTest {
         scanner.close();
 //        System.out.println(list);
 
-        Map<String,Integer> finalList = new HashMap<>();
-        for (int j = 0; j < list.size(); j++) {
-
-            if (list.containsValue(counter>3))
-                System.out.println(list.get(word));
-
+        for (Map.Entry<String, Integer> map : list.entrySet()) {
+            map.getKey();
+            if (counter>3) {
+                map.getValue();
+            }
 
 
 
