@@ -7,75 +7,84 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Mike on 2/8/2016.
  */
 public class ThreadsTest {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
 
-        myScannerThread scannerThread = new myScannerThread("d:\\in3.txt");
+
+        ConcurrentHashMap<String, Integer> wordMap = new ConcurrentHashMap<>();
+
+        myScannerThread scannerThread = new myScannerThread("d:\\in3.txt", wordMap);
         Thread thread = new Thread(scannerThread);
         thread.start();
+        thread.join();
 
-//        myScannerThread scannerThread2 = new myScannerThread("d:\\in4.txt");
-//        Thread thread2 = new Thread(scannerThread);
-//        thread2.start();
+        myScannerThread scannerThread2 = new myScannerThread("d:\\in4.txt",wordMap);
+        Thread thread2 = new Thread(scannerThread);
+        thread2.start();
+        thread.join();
 
-//        myScannerThread scannerThread3 = new myScannerThread("d:\\in5.txt");
-//        Thread thread3 = new Thread(scannerThread);
-//        thread3.start();
+        myScannerThread scannerThread3 = new myScannerThread("d:\\in5.txt",wordMap);
+        Thread thread3 = new Thread(scannerThread);
+        thread3.start();
+        thread.join();
 
+        for (ConcurrentHashMap.Entry<String, Integer> map : wordMap.entrySet()) {
+
+            if (map.getValue() > 3) {
+                System.out.println(map.getKey());
+            }
+
+
+        }
 
     }
 }
 
-  class myScannerThread implements Runnable {
-      Scanner scanner;
-      String fileLocation;
-      public myScannerThread(String fileLocation){
+class myScannerThread implements Runnable {
+    Scanner scanner;
+    String fileLocation;
+    ConcurrentHashMap<String, Integer> wordMap = null;
 
-          this.fileLocation = fileLocation;
-      }
+    public myScannerThread(String fileLocation, ConcurrentHashMap<String, Integer> wordMap) {
 
-     public void run() {
+        this.fileLocation = fileLocation;
+        this.wordMap = wordMap;
+    }
 
-
-
-         try {
-             scanner = new Scanner(new BufferedReader(new FileReader(fileLocation)));
-         } catch (FileNotFoundException e) {
-             e.printStackTrace();
-         }
-         scanner.useLocale(Locale.ENGLISH);
-         Map<String, Integer> list = new HashMap<>();
-         int counter = 0;
-
-         while (scanner.hasNext()) {
-
-             String word = scanner.next();
-             if (list.containsKey(word)) {
-                 counter = list.get(word);
-                 counter++;
-                 list.put(word, counter);
-             } else {
-                 list.put(word, 1);
-             }
-         }
-
-         scanner.close();
+    public void run() {
 
 
-         for (Map.Entry<String, Integer> map : list.entrySet()) {
+        try {
+            scanner = new Scanner(new BufferedReader(new FileReader(fileLocation)));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        scanner.useLocale(Locale.ENGLISH);
 
-             if (map.getValue() > 3) {
-                 System.out.println(map.getKey());
-             }
+        int counter = 0;
+
+        while (scanner.hasNext()) {
+
+            String word = scanner.next();
+            if (wordMap.containsKey(word)) {
+                counter = wordMap.get(word);
+                counter++;
+                wordMap.put(word, counter);
+            } else {
+                wordMap.put(word, 1);
+            }
+        }
+
+        scanner.close();
 
 
-         }
-     }
- }
+    }
+}
 
 
 
