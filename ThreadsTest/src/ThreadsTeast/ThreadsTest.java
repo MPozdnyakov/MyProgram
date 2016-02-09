@@ -43,8 +43,8 @@ public class ThreadsTest {
 }
 
 class myScannerThread implements Runnable {
-    String fileToRead;
-    String fileToWrite;
+    private String fileToRead;
+    private String fileToWrite;
     ConcurrentHashMap<String, Integer> wordMap = null;
 
     public myScannerThread(String fileToRead, ConcurrentHashMap<String, Integer> wordMap, String fileToWrite) {
@@ -53,7 +53,7 @@ class myScannerThread implements Runnable {
         this.wordMap = wordMap;
     }
 
-
+    @Override
     public void run() {
         Scanner scanner = null;
         FileWriter fileWriter = null;
@@ -63,7 +63,7 @@ class myScannerThread implements Runnable {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        scanner.useLocale(Locale.ENGLISH);
+
         try {
             fileWriter = new FileWriter(fileToWrite);
         } catch (IOException e) {
@@ -105,7 +105,7 @@ class myScannerThread implements Runnable {
 
             if (map.getValue() > 3) {
 
-                fileWriter.write(map.getKey()+", ");
+                fileWriter.write(map.getKey() + ", ");
             }
         }
         fileWriter.flush();
