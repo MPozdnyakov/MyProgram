@@ -31,14 +31,12 @@ class Counter implements Runnable {
     @Override
     public void run() {
         synchronized (mutex) {
-//            try {
-//                mutex.wait();
-                for (int i = 0; i < 5; i++) {
+                            for (int i = 0; i < 5; i++) {
+
                     System.out.println(Thread.currentThread().getName() + " " + numbersCounter());
-                }
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+
+            }
+
 
     }
     }
