@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyProgram.iml" filepath="$PROJECT_DIR$/MyProgram.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Synchronization/Synchronization.iml" filepath="$PROJECT_DIR$/Synchronization/Synchronization.iml" />
       <module fileurl="file://$PROJECT_DIR$/ThreadsTest/ThreadsTest.iml" filepath="$PROJECT_DIR$/ThreadsTest/ThreadsTest.iml" />
     </modules>
   </component>

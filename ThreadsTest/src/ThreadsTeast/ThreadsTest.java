@@ -1,7 +1,6 @@
 package ThreadsTeast;
 
 import java.io.*;
-import java.util.Locale;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -14,19 +13,19 @@ public class ThreadsTest {
 
         ConcurrentHashMap<String, Integer> wordMap = new ConcurrentHashMap<>();
 
-        myScannerThread scannerThread = new myScannerThread("d:\\in3.txt", wordMap, "d:\\out3.txt");
+        MyScannerThread scannerThread = new MyScannerThread("d:\\in3.txt", wordMap, "d:\\out3.txt");
         Thread thread = new Thread(scannerThread);
         thread.start();
-        thread.join();
 
-        myScannerThread scannerThread2 = new myScannerThread("d:\\in4.txt", wordMap, "d:\\out4.txt");
+        MyScannerThread scannerThread2 = new MyScannerThread("d:\\in4.txt", wordMap, "d:\\out4.txt");
         Thread thread2 = new Thread(scannerThread2);
         thread2.start();
-        thread2.join();
 
-        myScannerThread scannerThread3 = new myScannerThread("d:\\in5.txt", wordMap, "d:\\out5.txt");
+        MyScannerThread scannerThread3 = new MyScannerThread("d:\\in5.txt", wordMap, "d:\\out5.txt");
         Thread thread3 = new Thread(scannerThread3);
         thread3.start();
+        thread.join();
+        thread2.join();
         thread3.join();
 
 
@@ -42,12 +41,12 @@ public class ThreadsTest {
     }
 }
 
-class myScannerThread implements Runnable {
+class MyScannerThread implements Runnable {
     private String fileToRead;
     private String fileToWrite;
     ConcurrentHashMap<String, Integer> wordMap = null;
 
-    public myScannerThread(String fileToRead, ConcurrentHashMap<String, Integer> wordMap, String fileToWrite) {
+    public MyScannerThread(String fileToRead, ConcurrentHashMap<String, Integer> wordMap, String fileToWrite) {
         this.fileToWrite = fileToWrite;
         this.fileToRead = fileToRead;
         this.wordMap = wordMap;
@@ -99,7 +98,6 @@ class myScannerThread implements Runnable {
     }
 
     private void writeFile(FileWriter fileWriter, ConcurrentHashMap<String, Integer> wordMap) throws IOException {
-
 
         for (ConcurrentHashMap.Entry<String, Integer> map : wordMap.entrySet()) {
 
