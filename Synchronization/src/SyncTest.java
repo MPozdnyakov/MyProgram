@@ -26,8 +26,8 @@ public class SyncTest {
 class Counter implements Runnable {
 
 
-     private int adding;
-     private int switcher = 0;
+     volatile private int adding;
+    volatile private int switcher = 0;
 
     public Counter(int adding) {
         this.adding = adding;
@@ -37,25 +37,32 @@ class Counter implements Runnable {
     @Override
     public void run() {
         for (int i = 1 + adding; i < 20; i += 3) {
-            if (adding == 0 && switcher == 0) {
+            if (adding == 0) {
+
+                while (switcher != 0) {}
 
                 System.out.println(Thread.currentThread().getName() + " " + i);
 
-            } switcher = 1;
-
-            if (adding == 1 && switcher == 1) {
-
-                System.out.println(Thread.currentThread().getName()+" "+i);
-
+                switcher = 1;
             }
-            switcher = 2;
 
-            if (adding == 2 && switcher == 2) {
+            if (adding == 1) {
 
-                System.out.println(Thread.currentThread().getName()+" "+i);
+                while (switcher != 1) {}
 
+                System.out.println(Thread.currentThread().getName() + " " + i);
+
+                switcher = 2;
             }
-            switcher = 0;
+
+            if (adding == 2) {
+
+                while (switcher != 2) {}
+
+                System.out.println(Thread.currentThread().getName() + " " + i);
+
+                switcher = 0;
+            }
         }
     }
 }
