@@ -26,8 +26,8 @@ public class SyncTest {
 class Counter implements Runnable {
 
 
-     volatile private int adding;
-    volatile private int switcher = 0;
+      private int adding;
+     private static int switcher = 0;
 
     public Counter(int adding) {
         this.adding = adding;
