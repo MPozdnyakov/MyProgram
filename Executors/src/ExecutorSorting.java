@@ -33,21 +33,21 @@ class RecursiveAction extends RecursiveTask<int[]> {
     private int array[];
     private int start;
     private int end;
-
     RecursiveAction(int[] array, int start, int end) {
         this.array = array;
         this.start = start;
         this.end = end;
 
     }
+    int[] mergedArray = new int[100];
 
     @Override
     protected int[] compute() {
-
+       ;
         if (end - start <= 25) {
             int sum = 0;
-            for (int i = start; i < end; i++) {
-                for (int j = 0; j < end - i - 1; j++) {
+            for (int i = start; i < array.length; i++) {
+                for (int j = 0; j < array.length - i - 1; j++) {
                     if (array[j] > array[j + 1]) {
                         int t = array[j];
                         array[j] = array[j + 1];
@@ -57,21 +57,16 @@ class RecursiveAction extends RecursiveTask<int[]> {
             }
             return array;
         } else {
-            int[] sortedArray = new int[end];
+
             int middle = ((end - start) / 2) + start;
             RecursiveAction left = new RecursiveAction(array, start, middle);
             left.fork();
             RecursiveAction right = new RecursiveAction(array, middle, end);
 
-            int[] array1 = right.compute();
+            int[] array = right.compute();
             int[] array2 = left.join();
-            for (int i = 0; i < array1.length; i++){
-               sortedArray[i] = array1[i];
-            }
-            for (int i = array1.length; i < end; i++){
-                sortedArray[i] = array2[i];
-            }
-            return sortedArray;
+//
+            return array;
         }
 
     }
