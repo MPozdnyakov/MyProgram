@@ -39,7 +39,7 @@ class RecursiveAction extends RecursiveTask<int[]> {
         this.end = end;
 
     }
-    int[] mergedArray = new int[100];
+
 
     @Override
     protected int[] compute() {
