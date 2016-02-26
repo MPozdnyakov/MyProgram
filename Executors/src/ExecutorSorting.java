@@ -11,10 +11,10 @@ public class ExecutorSorting {
 
     public static void main(String[] args) {
 
-        int[] array = new int[1000];
+        int[] array = new int[100];
         System.out.println("unsorted");
         for (int i = 0; i < array.length; i++) {
-            array[i] = (int) (Math.random() * 100) - 50;
+            array[i] = (int) (Math.random() * 10) - 0;
             System.out.print(array[i] + ", ");
         }
         ForkJoinPool pool = new ForkJoinPool();
@@ -25,21 +25,12 @@ public class ExecutorSorting {
         System.out.println("sorted");
         System.out.println();
         for (int i = 0; i < array.length; i++) {
-            System.out.print(sortedArray[i]);
+            System.out.print(sortedArray[i]+", ");
         }
         double stop = System.currentTimeMillis();
         System.out.println();
-        System.out.println("time"+ (stop-start));
-// this example shows the difference and effectiveness of multithreaded sorting
+        System.out.println("time "+ (stop-start));
 
-        RecursiveAction arrayTest = new RecursiveAction(array);
-        double start1 = System.currentTimeMillis();
-        arrayTest.sort(array);
-        double stop1 = System.currentTimeMillis();
-
-        System.out.println();
-        System.out.println();
-        System.out.println("time1"+ (stop-start));
     }
 }
 
@@ -101,18 +92,5 @@ class RecursiveAction extends RecursiveTask<int[]> {
         return mergedArray;
     }
 
-    public int[] sort(int[] array) {
-        if (array.length <= 25) {
-            for (int i = 0; i < array.length - 1; i++) {
-                for (int j = i + 1; j < array.length; j++) {
-                    if (array[i] > array[j]) {
-                        int t = array[j];
-                        array[j] = array[i];
-                        array[i] = t;
-                    }
-                }
-            }
-        }
-        return array;
-    }
+
 }
